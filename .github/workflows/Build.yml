@@ -28,7 +28,10 @@ jobs:
           git pull --rebase
 
       - shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: just pw projects update-dates
+
 
       - name: Commit and push if projects.json changed
         run: |-
