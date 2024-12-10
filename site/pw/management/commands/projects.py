@@ -5,9 +5,10 @@ from typing import TypedDict
 
 from django.core.management.base import BaseCommand, CommandError
 import urllib.request
+from coltrane.config.paths import get_data_directory
 
 # Path to the projects file
-PROJECT_FILE_PATH = Path("data/projects.json")
+PROJECT_FILE_PATH = get_data_directory() / "projects.json"
 OPEN_SOURCE = "Open Source"
 GH_API_TOKEN = os.getenv("GITHUB_TOKEN")
 
@@ -27,7 +28,7 @@ class Project(TypedDict):
 
 
 class Command(BaseCommand):
-    help = "Manage projects with commands to update dates or add a new project."
+    help = "Manage projects with commands to update dates or add a new project from github."
 
     def add_arguments(self, parser):
         subparsers = parser.add_subparsers(dest="command", help="Sub-command help")
@@ -56,7 +57,7 @@ class Command(BaseCommand):
         need_update = [
             project for project in projects if project.get("active") and project.get("company") == OPEN_SOURCE
         ]
-
+        updated_projects = []
         for project in need_update:
             repo_name = project["github_url"].split("/")[-1]
             commits = github_api_request(f"repos/Tobi-De/{repo_name}/commits")
@@ -65,9 +66,15 @@ class Command(BaseCommand):
             if project["last_updated"] != last_update_date:
                 self.stdout.write(f"Updating {project['name']}")
                 project["last_updated"] = last_update_date
+                updated_projects.append(project["name"])
 
         with open(PROJECT_FILE_PATH, "w") as file:
             json.dump(projects, file, indent=4)
+        
+        if updated_projects:
+            self.stdout.write(self.style.SUCCESS(f"\nThe following projects were updated: {', '.join(updated_projects)}"))
+        else:
+            self.stdout.write(self.style.SUCCESS("No projects required updates."))
 
     def add_project(self, options):
         project_name = options["project_name"]
