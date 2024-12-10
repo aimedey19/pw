@@ -9,5 +9,9 @@ dependencies = [
     "coltrane<1",
     "django-htmx>=1.21.0",
     "mistune>=3.0.2",
+    "msgspec",
     "pytailwindcss>=0.2.0",
 ]
+
+[tool.uv.sources]
+msgspec = { git = "https://github.com/jcrist/msgspec.git", rev = "main" }
