@@ -10,14 +10,14 @@ _default:
     uv run coltrane play
 
 # Build static site
-@build:
+build:
     #!/usr/bin/env bash
     export DEBUG=False
     export ALLOWED_HOSTS=oluwatobi.dev
     export COLTRANE_DESCRIPTION="Tobi DEGNON online portfolio and web developer blog, write on mostly django."
     export COLTRANE_SITE_URL="https://oluwatobi.dev"
     export COLTRANE_TITLE="Tobi Personal Website"
-    coltrane record --output ../docs --force --threads 2
+    uv run coltrane record --output ../static_site --force --threads 2
 
 # Compile tailwind in watch mode
 @tailwind:

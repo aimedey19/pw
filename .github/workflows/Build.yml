@@ -15,10 +15,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.12
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Install just
+        uses: extractions/setup-just@v2
 
       - name: Pull and rebase before any work
         run: |-
@@ -27,8 +28,7 @@ jobs:
           git pull --rebase
 
       - shell: bash
-        run: |
-          python projects.py update-dates
+        run: just pw projects update-dates
 
       - name: Commit and push if projects.json changed
         run: |-
@@ -48,7 +48,6 @@ jobs:
 
       - name: Install just
         uses: extractions/setup-just@v2
-
 
       - name: Pull and rebase before any work
         run: |-
