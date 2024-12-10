@@ -1,33 +1,13 @@
-[tool.poetry]
+[project]
 name = "pw"
 version = "0.1.0"
-description = ""
-authors = ["Tobi DEGNON <tobidegnon@proton.me>"]
-license = "MIT"
+description = "Personal website"
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.11"
-django-htmx = "^1.17.2"
-mistune = "^3.0.2"
-pytailwindcss = "^0.2.0"
-poethepoet = "^0.24.4"
-coltrane = {extras = ["mistune"], version = "^0.30.1"}
-
-
-[tool.poetry.group.dev.dependencies]
-pre-commit = "^3.6.0"
-
-[tool.poe.tasks.t]
-cmd = "tailwindcss -i static/css/input.css -o static/css/output.css --watch"
-help = "Compile tailwind in watch mode"
-
-[tool.poe.tasks.r]
-cmd = "coltrane record --output docs --force"
-
-[tool.poe.tasks.s]
-cmd = "coltrane play"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires-python = ">=3.12"
+license = "MIT"
+dependencies = [
+    "coltrane<1",
+    "django-htmx>=1.21.0",
+    "mistune>=3.0.2",
+    "pytailwindcss>=0.2.0",
+]
