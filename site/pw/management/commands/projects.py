@@ -37,7 +37,7 @@ class Command(BaseCommand):
         update_parser.set_defaults(func=self.update_dates)
 
         add_parser = subparsers.add_parser("add-project", help="Add a new project")
-        add_parser.add_argument("project_name", type=str, help="Name of the GitHub project")
+        add_parser.add_argument("repo", type=str, help="Name of the GitHub project")
         add_parser.add_argument("--dry-run", action="store_true", help="Simulate without saving")
         add_parser.set_defaults(func=self.add_project)
 
@@ -45,7 +45,7 @@ class Command(BaseCommand):
         if options.get("func"):
             options["func"](options)
         else:
-            self.stdout.write(self.style.ERROR("Please provide a valid command."))
+            self.stdout.write(f"Please provide a valid command, available options are: add-project, update-dates")
 
     def update_dates(self, _):
         if not PROJECT_FILE_PATH.exists():
@@ -59,12 +59,11 @@ class Command(BaseCommand):
         ]
         updated_projects = []
         for project in need_update:
-            repo_name = project["github_url"].split("/")[-1]
-            commits = github_api_request(f"repos/Tobi-De/{repo_name}/commits")
+            repo_name = project["github_url"].replace("https://github.com/", "")
+            commits = github_api_request(f"repos/{repo_name}/commits")
             last_update_date = commits[0]["commit"]["author"]["date"].split("T")[0]
 
             if project["last_updated"] != last_update_date:
-                self.stdout.write(f"Updating {project['name']}")
                 project["last_updated"] = last_update_date
                 updated_projects.append(project["name"])
 
@@ -74,14 +73,16 @@ class Command(BaseCommand):
         if updated_projects:
             self.stdout.write(self.style.SUCCESS(f"\nThe following projects were updated: {', '.join(updated_projects)}"))
         else:
-            self.stdout.write(self.style.SUCCESS("No projects required updates."))
+            self.stdout.write("No projects required updates.")
 
     def add_project(self, options):
-        project_name = options["project_name"]
+        repo = options["repo"]
         dry_run = options["dry_run"]
 
+        project_name = repo.split("/")[-1]
+
         try:
-            github_project = github_api_request(f"repos/Tobi-De/{project_name}")
+            github_project = github_api_request(f"repos/{repo}")
         except urllib.error.HTTPError as e:
             raise CommandError(f"Error fetching project: {e}")
 
