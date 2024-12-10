@@ -27,8 +27,6 @@ jobs:
           git pull --rebase
 
       - shell: bash
-        env:
-          GH_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
         run: |
           python projects.py update-dates
 
@@ -59,14 +57,7 @@ jobs:
           git pull --rebase
 
       - name: Run Coltrane record
-        run: |-
-          just build
-        env:
-          COLTRANE_SITE_URL: ${{ vars.COLTRANE_SITE_URL }}
-          ALLOWED_HOSTS: ${{ vars.ALLOWED_HOSTS }}
-          COLTRANE_DESCRIPTION: ${{ vars.COLTRANE_DESCRIPTION }}
-          COLTRANE_TITLE: ${{ vars.COLTRANE_TITLE }}
-          DEBUG: ${{ vars.DEBUG }}
+        run: just build
 
       - name: Commit and push if docs folder content changed
         run: |-

@@ -9,7 +9,7 @@ import urllib.request
 # Path to the projects file
 PROJECT_FILE_PATH = Path("data/projects.json")
 OPEN_SOURCE = "Open Source"
-GH_API_TOKEN = os.getenv("GH_API_TOKEN")
+GH_API_TOKEN = os.getenv("GITHUB_TOKEN")
 
 class Project(TypedDict):
     last_updated: str
@@ -117,7 +117,7 @@ class Command(BaseCommand):
 
 def github_api_request(path: str) -> dict:
     if not GH_API_TOKEN:
-        raise CommandError("GitHub API token is not set in the environment variables.")
+        raise CommandError("GitHub API token <GITHUB_TOKEN> is not set in the environment variables.")
     url = f"https://api.github.com/{path}"
     headers = {"Authorization": f"Bearer {GH_API_TOKEN}"}
     request = urllib.request.Request(url, headers=headers)
