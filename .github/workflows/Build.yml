@@ -8,8 +8,8 @@ on:
       - main
 
 jobs:
-  update-projects-with-latest-dates:
-    name: Update this repo's data/projects.json file with each project latest commit date
+  update-dates-and--build-static-site:
+    name: Update dates and build static site
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,41 +27,18 @@ jobs:
           git config --global user.name "Tobi DEGNON"
           git pull --rebase
 
-      - shell: bash
+      - name: Update projects date
+        shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: just pw projects update-dates
 
-
-      - name: Commit and push if projects.json changed
-        run: |-
-          git diff --quiet || (git add data/projects.json && git commit -m "Updated projects.json with latest commit dates")
-          git push
-
-  build-with-coltrane:
-    name: Build static site with coltrane
-    needs: [ update-projects-with-latest-dates ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v3
-
-      - name: Install just
-        uses: extractions/setup-just@v2
-
-      - name: Pull and rebase before any work
-        run: |-
-          git config --global user.email "tobidegnon@proton.me"
-          git config --global user.name "Tobi DEGNON"
-          git pull --rebase
-
-      - name: Run Coltrane record
+      - name: Build static site
         run: just build
 
       - name: Commit and push if docs folder content changed
         run: |-
-          git diff --quiet || (git add -A && git commit -m "build static site")
+          git diff --quiet || (git commit -am "build static site")
           git push
+
+     
