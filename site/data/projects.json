@@ -287,5 +287,17 @@
         "featured": true,
         "active": true,
         "private": false
+    },
+    {
+        "last_updated": "2024-11-24",
+        "name": "fujin",
+        "description": "Get your project up and running in minutes on your vps.",
+        "stack": "Python",
+        "company": "Open Source",
+        "web_url": "https://fujin.oluwatobi.dev/en/latest/",
+        "github_url": "https://github.com/falcopackages/fujin",
+        "featured": true,
+        "active": true,
+        "private": false
     }
 ]
