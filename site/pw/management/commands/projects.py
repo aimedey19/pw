@@ -32,37 +32,24 @@ class Command(BaseCommand):
         subparsers = parser.add_subparsers(dest="command", help="Sub-command help")
 
         update_parser = subparsers.add_parser(
-            "update-dates", help="Update project dates"
+            "update", help="Update project dates and sort them"
         )
-        update_parser.set_defaults(func=self.update_dates)
+        update_parser.set_defaults(func=self.update)
 
-        add_parser = subparsers.add_parser("add-project", help="Add a new project")
+        add_parser = subparsers.add_parser("add", help="Add a new project")
         add_parser.add_argument("repo", type=str, help="Name of the GitHub project")
         add_parser.add_argument(
             "--dry-run", action="store_true", help="Simulate without saving"
         )
-        add_parser.set_defaults(func=self.add_project)
-
-        sort_parser = subparsers.add_parser("sort", help="Sort projects")
-        sort_parser.set_defaults(func=self.sort)
+        add_parser.set_defaults(func=self.add)
 
     def handle(self, *args, **options):
         if options.get("func"):
             options["func"](options)
         else:
-            self.stdout.write(
-                f"Please provide a valid command, available options are: add-project, update-dates"
-            )
+            self.print_help(prog_name="pw", subcommand="projects")
 
-    def sort(self, _):
-        with edit_projects() as projects:
-            projects.sort(key=lambda p: parse(p.get("last_updated")), reverse=True)
-            projects.sort(key=lambda p: p.get("featured"), reverse=True)
-            projects.sort(key=lambda p: p.get("priority", 0), reverse=True)
-
-        self.stdout.write(self.style.SUCCESS("Projects sorted successfully."))
-
-    def update_dates(self, _):
+    def update(self, _):
         with edit_projects() as projects:
             need_update = [
                 project
@@ -78,6 +65,9 @@ class Command(BaseCommand):
                 if project["last_updated"] != last_update_date:
                     project["last_updated"] = last_update_date
                     updated_projects.append(project["name"])
+            projects.sort(key=lambda p: parse(p.get("last_updated")), reverse=True)
+            projects.sort(key=lambda p: p.get("featured"), reverse=True)
+            projects.sort(key=lambda p: p.get("priority", 0), reverse=True)
 
         if updated_projects:
             self.stdout.write(
@@ -88,7 +78,7 @@ class Command(BaseCommand):
         else:
             self.stdout.write("No projects required updates.")
 
-    def add_project(self, options):
+    def add(self, options):
         repo = options["repo"]
         dry_run = options["dry_run"]
 

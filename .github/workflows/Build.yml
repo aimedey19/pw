@@ -27,18 +27,16 @@ jobs:
           git config --global user.name "Tobi DEGNON"
           git pull --rebase
 
-      - name: Update projects date
+      - name: Update projects
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: just pw projects update-dates
+        run: just pw projects update
 
       - name: Build static site
         run: just build
 
-      - name: Commit and push if docs folder content changed
+      - name: Commit and push if static_site folder content changed
         run: |-
           git diff --quiet || (git commit -am "build static site")
           git push
-
-     
