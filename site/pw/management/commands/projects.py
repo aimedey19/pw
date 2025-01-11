@@ -1,20 +1,15 @@
 import json
 import os
 import urllib.request
-from typing import TypedDict
+from contextlib import contextmanager
 from pathlib import Path
+from typing import TypedDict
 
-from coltrane.config.paths import get_data_directory
-from coltrane.renderer import StaticRequest
 from dateparser import parse
 from django.core.management.base import BaseCommand, CommandError
-from coltrane.config.settings import get_config
 
-# Path to the projects file
-site = get_config(base_dir=Path(".")).get_site(StaticRequest(path="/"))
-PROJECT_FILE_PATH = get_data_directory(site=site) / "projects.json"
 OPEN_SOURCE = "Open Source"
-GH_API_TOKEN = os.getenv("GITHUB_TOKEN")
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
 
 class Project(TypedDict):
@@ -60,44 +55,29 @@ class Command(BaseCommand):
             )
 
     def sort(self, _):
-        if not PROJECT_FILE_PATH.exists():
-            raise CommandError(f"{PROJECT_FILE_PATH} does not exist.")
+        with edit_projects() as projects:
+            projects.sort(key=lambda p: parse(p.get("last_updated")), reverse=True)
+            projects.sort(key=lambda p: p.get("featured"), reverse=True)
+            projects.sort(key=lambda p: p.get("priority", 0), reverse=True)
 
-        with open(PROJECT_FILE_PATH) as file:
-            projects: list[Project] = json.load(file)
-        projects.sort(key=lambda p: parse(p.get("last_updated")), reverse=True)
-        projects.sort(key=lambda p: p.get("featured"), reverse=True)
-        projects.sort(key=lambda p: p.get("priority", 0), reverse=True)
-
-
-        with open(PROJECT_FILE_PATH, "w") as file:
-            json.dump(projects, file, indent=4)
+        self.stdout.write(self.style.SUCCESS("Projects sorted successfully."))
 
     def update_dates(self, _):
-        if not PROJECT_FILE_PATH.exists():
-            raise CommandError(f"{PROJECT_FILE_PATH} does not exist.")
+        with edit_projects() as projects:
+            need_update = [
+                project
+                for project in projects
+                if project.get("active") and project.get("company") == OPEN_SOURCE
+            ]
+            updated_projects = []
+            for project in need_update:
+                repo_name = project["github_url"].replace("https://github.com/", "")
+                commits = github_api_request(f"repos/{repo_name}/commits")
+                last_update_date = commits[0]["commit"]["author"]["date"].split("T")[0]
 
-        with open(PROJECT_FILE_PATH) as file:
-            projects: list[Project] = json.load(file)
-
-        need_update = [
-            project
-            for project in projects
-            if project.get("active") and project.get("company") == OPEN_SOURCE
-        ]
-        updated_projects = []
-        for project in need_update:
-            repo_name = project["github_url"].replace("https://github.com/", "")
-            commits = github_api_request(f"repos/{repo_name}/commits")
-            last_update_date = commits[0]["commit"]["author"]["date"].split("T")[0]
-
-            if project["last_updated"] != last_update_date:
-                project["last_updated"] = last_update_date
-                updated_projects.append(project["name"])
-
-
-        with open(PROJECT_FILE_PATH, "w") as file:
-            json.dump(projects, file, indent=4)
+                if project["last_updated"] != last_update_date:
+                    project["last_updated"] = last_update_date
+                    updated_projects.append(project["name"])
 
         if updated_projects:
             self.stdout.write(
@@ -142,29 +122,38 @@ class Command(BaseCommand):
             self.stdout.write(json.dumps(project, indent=4))
             return
 
-        if not PROJECT_FILE_PATH.exists():
-            raise CommandError(f"{PROJECT_FILE_PATH} does not exist.")
-
-        with open(PROJECT_FILE_PATH, "r") as file:
-            projects = json.load(file)
-
-        projects.append(project)
-
-        with open(PROJECT_FILE_PATH, "w") as file:
-            json.dump(projects, file, indent=4)
+        with edit_projects() as projects:
+            projects.append(project)
 
         self.stdout.write(
             self.style.SUCCESS(f"Project {project_name} added successfully.")
         )
 
 
+@contextmanager
+def edit_projects():
+    # FIXME: find a simpler way to get the PROJECT_FILE_PATH
+    from coltrane.config.settings import get_config
+    from coltrane.config.paths import get_data_directory
+    from coltrane.renderer import StaticRequest
+    site = get_config(base_dir=Path(".")).get_site(StaticRequest(path="/"))
+    projects_file = get_data_directory(site=site) / "projects.json"
+    projects_file.touch(exist_ok=True)
+    try:
+        with open(projects_file) as file:
+            projects = json.load(file)
+        yield projects
+    finally:
+        projects_file.write_bytes(json.dumps(projects, indent=4).encode())
+
+
 def github_api_request(path: str) -> dict:
-    if not GH_API_TOKEN:
+    if not GITHUB_TOKEN:
         raise CommandError(
             "GitHub API token <GITHUB_TOKEN> is not set in the environment variables."
         )
     url = f"https://api.github.com/{path}"
-    headers = {"Authorization": f"Bearer {GH_API_TOKEN}"}
+    headers = {"Authorization": f"Bearer {GITHUB_TOKEN}"}
     request = urllib.request.Request(url, headers=headers)
     response = urllib.request.urlopen(request)
     return json.load(response)
