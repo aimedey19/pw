@@ -1,3 +1,4 @@
+from coltrane import get_config
 from coltrane.retriever import get_data
 
 from django import template
@@ -10,7 +11,8 @@ register = template.Library()
 
 @register.simple_tag(name="get_projects")
 def get_projects() -> list[dict[str, str]]:
-    projects = get_data()["projects"]
+    site = get_config(base_dir=Path(".")).get_site(request)
+    projects = get_data(site=site)["projects"]
     for project in projects:
         project["last_updated"] = parse(project["last_updated"])
 

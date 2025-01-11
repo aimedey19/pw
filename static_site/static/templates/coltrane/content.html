@@ -1,0 +1,29 @@
+{% extends "coltrane/base.html" %}
+{% load static %}
+
+{% load humanize %}
+
+{% block content %}
+<main class="pt-8 pb-16 lg:pt-16 lg:pb-24">
+    <div class="flex justify-between px-4 mx-auto max-w-screen-xl ">
+        <article
+            class="mx-auto w-full max-w-4xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert prose md:prose-lg  prose-invert">
+
+            <header class="mb-4">
+                <!-- fixme when this will be a datetime, put the isoformat value -->
+                <time datetime="{{ publish_date }}"
+                    class="order-first flex items-center text-base text-zinc-400 dark:text-zinc-500"><span
+                        class="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span>
+                    <span class="ml-3">{{publish_date }}</span></time>
+                <h1 class="mt-6 text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
+                    {{ title }}
+                </h1>
+                {# <span class="mt-5 text-sm">{{ content|reading_time }}</span>#}
+                <p class="mt-6 text-base text-zinc-600 dark:text-zinc-400">{{ description }}</p>
+            </header>
+            {{ content|obsidian_links }}
+        </article>
+    </div>
+</main>
+
+{% endblock content %}
