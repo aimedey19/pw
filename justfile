@@ -20,7 +20,7 @@ _default:
 
 # Compile tailwind in watch mode
 @tailwind:
-    tailwindcss -i site/static/css/input.css -o site/static/css/output.css --watch
+    uv run tailwindcss -i site/static/css/input.css -o site/static/css/output.css --watch
 
 # Build static site
 build:
