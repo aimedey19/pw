@@ -58,7 +58,7 @@ wheels = [
 [[package]]
 name = "coltrane"
 version = "0.38.1"
-source = { git = "https://github.com/Tobi-De/coltrane?rev=main#4be6a59ef8a331d1fedd7c51819106f5d421dad2" }
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
     { name = "click-aliases" },
@@ -75,6 +75,10 @@ dependencies = [
     { name = "python-frontmatter" },
     { name = "pywatchman" },
     { name = "rich-click" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f1/3b/6bdc73fd9cd7ae4f5bda911ad36d3b92ca7c4a592e7d1172a3645126359b/coltrane-0.38.1.tar.gz", hash = "sha256:f53ee534c62e6e16fc4fc77c9b47b0a66c84f07cfb5df0d640f1e11f557222aa", size = 512212 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/eb/57/708d77cfebac36dbe466b05690ab139d114a9e290b38f0e50502a2b4b922/coltrane-0.38.1-py3-none-any.whl", hash = "sha256:cc7c7bef6f475d39e677094df1f68a70197f4f12a8ae0073bb404e1d9c2241f7", size = 47671 },
 ]
 
 [[package]]
@@ -227,7 +231,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "coltrane", git = "https://github.com/Tobi-De/coltrane?rev=main" },
+    { name = "coltrane", specifier = "<1" },
     { name = "django-htmx", specifier = ">=1.21.0" },
     { name = "mistune", specifier = ">=3.0.2" },
     { name = "msgspec", git = "https://github.com/jcrist/msgspec.git?rev=main" },

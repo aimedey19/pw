@@ -13,17 +13,20 @@ _default:
     uv sync
 
 @serve:
+    uvx honcho start
+
+@play:
     uv run coltrane play
+
+# Compile tailwind in watch mode
+@tailwind:
+    tailwindcss -i site/static/css/input.css -o site/static/css/output.css --watch
 
 # Build static site
 build:
     #!/usr/bin/env bash
     export DEBUG=False
     uv run coltrane record --output ../static_site --force --threads 2
-
-# Compile tailwind in watch mode
-@tailwind:
-    tailwindcss -i static/css/input.css -o static/css/output.css --watch
 
 @pw *ARGS:
     uv run python site/app.py {{ ARGS }}
