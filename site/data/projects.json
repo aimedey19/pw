@@ -13,19 +13,6 @@
         "priority": 1
     },
     {
-        "last_updated": "2024-12-31",
-        "name": "falco",
-        "description": "Enhance your Django developer experience: CLI and Guides for the Modern Developer.",
-        "stack": "Python",
-        "company": "Open Source",
-        "web_url": "https://falco.oluwatobi.dev/",
-        "github_url": "https://github.com/falcopackages/falco-cli",
-        "featured": true,
-        "active": true,
-        "private": false,
-        "priority": 1
-    },
-    {
         "last_updated": "2025-01-11",
         "name": "cookiecutter-fastapi",
         "description": "A Cookiecutter template for fastapi projects, inspired by cookiecutter-django. My first experience trying to build a cookiecutter, one of the most boring things I've worked on.",
@@ -50,18 +37,6 @@
         "private": false
     },
     {
-        "last_updated": "2024-12-30",
-        "name": "django-litestream",
-        "description": "Django integration with litestream, a standalone streaming replication tool for SQLite.",
-        "stack": "Django",
-        "company": "Open Source",
-        "web_url": "https://github.com/Tobi-De/django-litestream",
-        "github_url": "https://github.com/Tobi-De/django-litestream",
-        "featured": true,
-        "active": true,
-        "private": false
-    },
-    {
         "last_updated": "2024-12-21",
         "name": "litestar-browser-reload",
         "description": "Automatic browser reload plugin for Litestar, designed for development use.",
@@ -69,30 +44,6 @@
         "company": "Open Source",
         "web_url": "https://github.com/Tobi-De/litestar-browser-reload",
         "github_url": "https://github.com/Tobi-De/litestar-browser-reload",
-        "featured": true,
-        "active": true,
-        "private": false
-    },
-    {
-        "last_updated": "2024-12-21",
-        "name": "litestar-browser-reload",
-        "description": "Automatic browser reload plugin for Litestar, designed for development use.",
-        "stack": "Litestar",
-        "company": "Open Source",
-        "web_url": "https://github.com/Tobi-De/litestar-browser-reload",
-        "github_url": "https://github.com/Tobi-De/litestar-browser-reload",
-        "featured": true,
-        "active": true,
-        "private": false
-    },
-    {
-        "last_updated": "2024-11-29",
-        "name": "fujin",
-        "description": "Get your project up and running in minutes on your vps.",
-        "stack": "Python",
-        "company": "Open Source",
-        "web_url": "https://fujin.oluwatobi.dev/en/latest/",
-        "github_url": "https://github.com/falcopackages/fujin",
         "featured": true,
         "active": true,
         "private": false
@@ -122,18 +73,6 @@
         "private": false
     },
     {
-        "last_updated": "2024-09-05",
-        "name": "litestar-tailwind-cli",
-        "description": "Provides a CLI plugin for Litestar to use Tailwind CSS via the Tailwind CLI.",
-        "stack": "Litestar",
-        "company": "Open Source",
-        "web_url": "https://github.com/Tobi-De/litestar-tailwind-cli",
-        "github_url": "https://github.com/Tobi-De/litestar-tailwind-cli",
-        "featured": true,
-        "active": true,
-        "private": false
-    },
-    {
         "last_updated": "2024-08-04",
         "name": "htmx_extensions",
         "description": "A registry of htmx extensions, both official and third-party.",
@@ -141,30 +80,6 @@
         "company": "Open Source",
         "web_url": "https://htmx-extensions.oluwatobi.dev/",
         "github_url": "https://github.com/Tobi-De/htmx_extensions",
-        "featured": true,
-        "active": true,
-        "private": false
-    },
-    {
-        "last_updated": "2024-08-04",
-        "name": "htmx_extensions",
-        "description": "A registry of htmx extensions, both official and third-party.",
-        "stack": "Coltrane",
-        "company": "Open Source",
-        "web_url": "https://htmx-extensions.oluwatobi.dev/",
-        "github_url": "https://github.com/Tobi-De/htmx_extensions",
-        "featured": true,
-        "active": true,
-        "private": false
-    },
-    {
-        "last_updated": "2024-06-27",
-        "name": "python-odt-template",
-        "description": "Render ODT files using Jinja2 or the Django templates Language, with support for converting documents to PDF via the LibreOffice CLI.",
-        "stack": "Python",
-        "company": "Open Source",
-        "web_url": "https://github.com/Tobi-De/python-odt-template",
-        "github_url": "https://github.com/Tobi-De/python-odt-template",
         "featured": true,
         "active": true,
         "private": false
@@ -218,7 +133,7 @@
         "private": false
     },
     {
-        "last_updated": "2025-01-13",
+        "last_updated": "2025-01-11",
         "name": "Personal Website v2",
         "description": "My personal website, the site you are currently on. It's a static site build using coltrane, a django based static site generator.",
         "stack": "Coltrane",
@@ -230,7 +145,7 @@
         "private": false
     },
     {
-        "last_updated": "2025-01-13",
+        "last_updated": "2025-01-11",
         "name": "Personal Website v2",
         "description": "My personal website, the site you are currently on. It's a static site build using coltrane, a django based static site generator.",
         "stack": "Coltrane",
