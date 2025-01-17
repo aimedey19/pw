@@ -13,7 +13,7 @@
         "priority": 1
     },
     {
-        "last_updated": "2025-01-11",
+        "last_updated": "2025-01-17",
         "name": "cookiecutter-fastapi",
         "description": "A Cookiecutter template for fastapi projects, inspired by cookiecutter-django. My first experience trying to build a cookiecutter, one of the most boring things I've worked on.",
         "stack": "python",
