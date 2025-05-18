@@ -16,7 +16,7 @@ _default:
     uvx honcho start
 
 @play:
-    uv run coltrane play
+    uv run coltrane play --port 8001
 
 # Compile tailwind in watch mode
 @tailwind:
