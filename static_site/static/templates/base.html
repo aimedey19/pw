@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="Tobi DEGNON">
+    <meta name="author" content="Aimé DEGBEY">
     {% block header_meta %}
-        <title>Tobi DEGNON</title>
-        <meta name="description" content="Tobi DEGNON online portfolio and web developer blog.">
-        <meta name="keywords" content="developer, backend, python, django, htmx, fastapi, database, web, blog">
+        <title>Aimé DEGBEY</title>
+        <meta name="description" content="Aimé DEGBEY online portfolio.">
+        <meta name="keywords" content="developer, backend, python, django, htmx, fastapi, database, web, software, engineer, aimé, degbey">
     {% endblock header_meta %}
     <link rel="stylesheet" href="{% static "css/output.css" %}">
     <link rel="stylesheet" href="{% static "css/code.css" %}">
@@ -16,16 +16,17 @@
     <script defer src="{% static "vendors/htmx/head-support.js" %}"></script>
 {#    <script type="module" src="https://unpkg.com/giscus?module"></script>#}
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
-    <script defer data-domain="oluwatobi.dev" src="https://plausible.service.dotfm.me/js/script.js"></script>
+    <script defer data-domain="aimedegbey.kodesio.com" src="https://plausible.service.dotfm.me/js/script.js"></script>
 
     <!-- favicon-->
-    <link rel="apple-touch-icon" sizes="180x180" href="{%  static 'favicons/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{%  static 'favicons/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{%  static 'favicons/favicon-16x16.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{%  static 'favicons/favicon.ico' %}">
+    <link rel="icon" href="{%  static 'favicons/favicon.ico' %}">
     <link rel="manifest" href="{% static 'favicons/site.webmanifest' %}">
-    <link rel="mask-icon" href="{% static 'favicons/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="mask-icon" href="{% static 'favicons/favicon.png' %}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+
+    {% block extra_css %}{% endblock extra_css %}
 
 
 </head>
@@ -60,14 +61,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/blog/"
-                       :class="path.includes('blog') ? 'text-teal-400' : ''"
-                       class="relative block px-3 py-2 transition hover:text-teal-400">Blog</a>
-                </li>
-                <li>
                     <a href="/colophon/"
                        :class="path.includes('colophon') ? 'text-teal-400' : ''"
-                       class="relative block px-3 py-2 transition hover:text-teal-400">Colophon</a>
+                       class="relative block px-3 py-2 transition hover:text-teal-400">The Nitty-Gritty</a>
                 </li>
             </ul>
         </div>
@@ -85,15 +81,7 @@
                     <div class="mx-auto max-w-2xl lg:max-w-5xl">
                         <div class="flex flex-col items-center justify-between gap-6 sm:flex-row">
                             <div class="flex gap-6 text-sm font-medium text-zinc-800 dark:text-zinc-200">
-                                <a href="https://dev.to/tobi"
-                                   class="text-zinc-500 hover:text-white">
-                                    <svg class="w-5 h-5" fill="currentColor" role="img" viewBox="0 0 24 24"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M7.42 10.05c-.18-.16-.46-.23-.84-.23H6l.02 2.44.04 2.45.56-.02c.41 0 .63-.07.83-.26.24-.24.26-.36.26-2.2 0-1.91-.02-1.96-.29-2.18zM0 4.94v14.12h24V4.94H0zM8.56 15.3c-.44.58-1.06.77-2.53.77H4.71V8.53h1.4c1.67 0 2.16.18 2.6.9.27.43.29.6.32 2.57.05 2.23-.02 2.73-.47 3.3zm5.09-5.47h-2.47v1.77h1.52v1.28l-.72.04-.75.03v1.77l1.22.03 1.2.04v1.28h-1.6c-1.53 0-1.6-.01-1.87-.3l-.3-.28v-3.16c0-3.02.01-3.18.25-3.48.23-.31.25-.31 1.88-.31h1.64v1.3zm4.68 5.45c-.17.43-.64.79-1 .79-.18 0-.45-.15-.67-.39-.32-.32-.45-.63-.82-2.08l-.9-3.39-.45-1.67h.76c.4 0 .75.02.75.05 0 .06 1.16 4.54 1.26 4.83.04.15.32-.7.73-2.3l.66-2.52.74-.04c.4-.02.73 0 .73.04 0 .14-1.67 6.38-1.8 6.68z"></path>
-                                    </svg>
-                                    <span class="sr-only">DevTo page</span>
-                                </a>
-                                <a href="mailto:tobidegnon@proton.me"
+                                <a href="mailto:aime.degbey@kodesio.com"
                                    class="text-zinc-500 hover:text-white">
                                     <svg viewBox="0 0 24 24" aria-hidden="true"
                                          class="w-5 h-5" fill="currentColor">
@@ -102,14 +90,14 @@
                                     </svg>
                                     <span class="sr-only">Email address</span>
                                 </a>
-                                <a href="https://twitter.com/tobidegnon"
+                                <a href="https://twitter.com/AnDegbey"
                                    class="text-zinc-500 hover:text-white">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
                                     </svg>
-                                    <span class="sr-only">Twitter page</span>
+                                    <span class="sr-only">X page</span>
                                 </a>
-                                <a href="https://github.com/Tobi-De"
+                                <a href="https://github.com/aimedey19"
                                    class="text-zinc-500 hover:text-white">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path fill-rule="evenodd"
@@ -118,23 +106,18 @@
                                     </svg>
                                     <span class="sr-only">GitHub account</span>
                                 </a>
-                                <a href="https://open.spotify.com/user/16nkjfi9016vplwwuohlk9t5n?si=32da9f7b741f4ef4"
-                                   class="text-zinc-500 hover:text-white">
-                                    <svg class="w-4 h-4 mt-0.5"
-                                         role="img" fill="currentColor" viewBox="0 0 24 24"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"></path>
-                                    </svg>
-                                    <span class="sr-only">Spotify account</span>
-                                </a>
                             </div>
-                            <p class="text-sm text-zinc-400 dark:text-zinc-500">© <!-- -->2022 - 2023<!-- --> Tobi
-                                DEGNON. All rights reserved.</p></div>
+                            <p class="text-sm text-zinc-400 dark:text-zinc-500">© <!-- --><span id="year"></span><!-- --> Aimé DEGBEY. All rights reserved.</p></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        const year = new Date().getFullYear();
+        document.getElementById('year').textContent = year;
+    </script>
 </footer>
 </body>
 </html>
